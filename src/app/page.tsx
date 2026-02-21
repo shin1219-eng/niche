@@ -25,6 +25,28 @@ export default function HomePage() {
               </Link>
             </div>
           </section>
+          <section className="card" style={{ marginTop: 20 }}>
+            <div className="section-title">
+              <div>
+                <h3>注目カテゴリ</h3>
+                <p>まずは用途で探したい人向けのショートカット。</p>
+              </div>
+            </div>
+            <div className="chip-row">
+              {[
+                "掃除",
+                "キッチン",
+                "収納・片付け",
+                "ガジェット",
+                "旅行・外出",
+                "サービス"
+              ].map((item) => (
+                <span key={item} className="chip">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </section>
           <section className="grid grid-2" style={{ marginTop: 24 }}>
             {[
               {

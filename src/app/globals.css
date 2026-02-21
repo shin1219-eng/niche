@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #f6f3ee;
-  --bg-accent: #efe6da;
+  --bg: #ffffff;
+  --bg-accent: #fff6dc;
   --surface: #ffffff;
-  --surface-2: #f2ede6;
-  --text: #1c1b19;
-  --muted: #6c655b;
-  --border: #d9d0c4;
-  --accent: #2b6d6a;
-  --accent-2: #d9783a;
-  --accent-3: #2c3d63;
-  --shadow: 0 12px 40px rgba(20, 18, 16, 0.08);
-  --radius: 16px;
-  --radius-sm: 10px;
+  --surface-2: #fff8e3;
+  --text: #1f1f1f;
+  --muted: #6a6a6a;
+  --border: #f0e4c4;
+  --accent: #f4c542;
+  --accent-2: #ffda6a;
+  --accent-3: #1f1f1f;
+  --shadow: 0 16px 32px rgba(22, 18, 8, 0.08);
+  --radius: 18px;
+  --radius-sm: 12px;
   --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
 }
@@ -26,7 +26,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--text);
-  background: radial-gradient(circle at top left, #faf6f0 0%, var(--bg) 45%, #efe7dc 100%);
+  background: linear-gradient(180deg, #fffdf6 0%, #ffffff 42%, #fff8e6 100%);
   min-height: 100vh;
 }
 
@@ -58,9 +58,10 @@ main {
   display: grid;
   gap: 24px;
   padding: 40px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #ffffff 0%, #f4ede3 100%);
+  border-radius: 28px;
+  background: linear-gradient(135deg, #ffffff 0%, #fff1c3 100%);
   box-shadow: var(--shadow);
+  border: 1px solid #f3e2b6;
 }
 
 .hero h1 {
@@ -83,12 +84,13 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 28px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  padding: 18px 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #f3e7c8;
   position: sticky;
   top: 0;
   z-index: 10;
+  gap: 16px;
 }
 
 .nav-brand {
@@ -98,6 +100,30 @@ main {
   font-family: var(--font-display);
   font-size: 1.15rem;
   letter-spacing: 0.02em;
+}
+
+.nav-brand a {
+  font-weight: 700;
+}
+
+.nav-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-search input {
+  width: min(520px, 100%);
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fffdf6;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .nav-links {
@@ -116,7 +142,7 @@ main {
 
 .nav-link.active {
   background: var(--accent);
-  color: #fff;
+  color: #1f1f1f;
 }
 
 .grid {
@@ -160,12 +186,12 @@ main {
 
 .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: #1f1f1f;
 }
 
 .btn-secondary {
   background: var(--accent-2);
-  color: #fff;
+  color: #1f1f1f;
 }
 
 .btn-ghost {
@@ -257,7 +283,7 @@ main {
 .preview {
   padding: 16px;
   border-radius: var(--radius-sm);
-  background: #fcfbf8;
+  background: #fffdf6;
   border: 1px dashed var(--border);
 }
 
@@ -278,6 +304,29 @@ main {
   align-items: center;
 }
 
+.article-thumb {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #fff4c7 0%, #ffffff 100%);
+  border: 1px solid #f3e2b6;
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff4c7;
+  border: 1px solid #f2dca1;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 .bookmark-btn {
   border: 1px solid var(--border);
   background: #fff;
@@ -294,7 +343,7 @@ main {
 }
 
 .notice {
-  background: #fff7e5;
+  background: #fff4ce;
   border: 1px solid #f1d8a5;
   border-radius: var(--radius-sm);
   padding: 10px 12px;
@@ -311,5 +360,9 @@ main {
 
   .nav-links {
     flex-wrap: wrap;
+  }
+
+  .nav-search {
+    width: 100%;
   }
 }

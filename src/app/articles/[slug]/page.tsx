@@ -58,6 +58,7 @@ export default function ArticleDetailPage() {
 
           {article && (
             <section className="card">
+              <div className="article-thumb" />
               <div className="article-meta">
                 <span className="badge">{STATUS_LABELS[article.status]}</span>
                 <span className="badge">更新: {article.updatedAt.slice(0, 10)}</span>

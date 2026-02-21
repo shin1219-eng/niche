@@ -7,6 +7,14 @@ import { loadArticles, loadBookmarks, saveBookmarks } from "@/lib/localStore";
 import { sampleArticles } from "@/lib/sampleData";
 import { ArticleItem, STATUS_LABELS } from "@/lib/types";
 
+const getPreviewText = (content: string) => {
+  const lines = content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#") && !line.startsWith("**"));
+  return lines[0] ?? "記事詳細で比較表・用途別おすすめ・FAQを確認できます。";
+};
+
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<ArticleItem[]>([]);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -66,12 +74,18 @@ export default function ArticlesPage() {
           <section className="article-grid" style={{ marginTop: 20 }}>
             {visibleArticles.map((article) => (
               <article key={article.id} className="card article-card">
+                <div className="article-thumb" />
                 <div className="article-meta">
                   <span className="badge">{STATUS_LABELS[article.status]}</span>
                   <span className="badge">更新: {article.updatedAt.slice(0, 10)}</span>
                 </div>
                 <h3>{article.title}</h3>
-                <p>記事詳細で比較表・用途別おすすめ・FAQを確認できます。</p>
+                <p>{getPreviewText(article.contentMd)}</p>
+                <div className="chip-row">
+                  <span className="chip">比較表</span>
+                  <span className="chip">用途別</span>
+                  <span className="chip">FAQ</span>
+                </div>
                 <div className="inline-actions">
                   <Link className="btn btn-primary" href={`/articles/${article.slug}`}>
                     記事を読む

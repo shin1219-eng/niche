@@ -9,7 +9,10 @@ export default function PublicNav() {
         <Link href="/">NICHE!</Link>
         <span className="badge">公開サイト</span>
       </div>
-      <div className="nav-links">
+      <div className="nav-search">
+        <input className="input" placeholder="気になるニッチを検索" />
+      </div>
+      <div className="nav-actions">
         <Link className="nav-link" href="/articles">
           記事一覧
         </Link>

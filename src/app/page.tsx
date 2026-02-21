@@ -8,7 +8,7 @@ export default function HomePage() {
       <PublicNav />
       <section className="hero-large">
         <div className="hero-content">
-          <h1 className="hero-title">知らなかった面白いに出会う場所。</h1>
+          <h1 className="hero-title">知らなかった「面白い」に出会う場所</h1>
           <p className="hero-sub">
             普段なら出会わないような世界中のニッチを集めました。
           </p>

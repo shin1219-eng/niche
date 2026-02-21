@@ -5,64 +5,92 @@ export default function HomePage() {
   return (
     <div>
       <PublicNav />
+      <section className="hero-large">
+        <div className="hero-content">
+          <h1 className="hero-title">ベストなニッチを、迷わず選ぶ。</h1>
+          <p className="hero-sub">
+            公式データと比較軸で、あなたの条件に刺さる商品・サービスを紹介します。
+          </p>
+          <div className="hero-search">
+            <input placeholder="何を探していますか？" />
+            <button type="button">検索</button>
+          </div>
+        </div>
+      </section>
       <main>
         <div className="container">
-          <section className="hero">
+          <section className="section-grid" style={{ marginTop: 24 }}>
             <div>
-              <span className="badge">NICHE!</span>
-              <h1>埋もれてるけど刺さる日本のニッチを、比較と編集で届ける。</h1>
-              <p>
-                公式情報や一次情報をベースに、用途別に迷わない比較を提供します。
-                記事一覧から最新のニッチをチェックしてください。
-              </p>
-            </div>
-            <div className="inline-actions">
-              <Link className="btn btn-primary" href="/articles">
-                記事一覧を見る
-              </Link>
-              <Link className="btn btn-ghost" href="/admin/topics">
-                管理画面へ
-              </Link>
-            </div>
-          </section>
-          <section className="card" style={{ marginTop: 20 }}>
-            <div className="section-title">
-              <div>
-                <h3>注目カテゴリ</h3>
-                <p>まずは用途で探したい人向けのショートカット。</p>
+              <div className="section-title">
+                <div>
+                  <h3>あなたの新生活をサポート</h3>
+                  <p>よく読まれるテーマを集めました。</p>
+                </div>
               </div>
-            </div>
-            <div className="chip-row">
-              {[
-                "掃除",
-                "キッチン",
-                "収納・片付け",
-                "ガジェット",
-                "旅行・外出",
-                "サービス"
-              ].map((item) => (
-                <span key={item} className="chip">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </section>
-          <section className="grid grid-2" style={{ marginTop: 24 }}>
-            {[
-              {
-                title: "用途別の比較",
-                desc: "刺さる条件と比較軸を明示し、選ぶ基準を短時間で共有します。"
-              },
-              {
-                title: "最新ニッチの発掘",
-                desc: "楽天/Yahoo中心のデータ収集で、埋もれた商品やサービスを拾います。"
-              }
-            ].map((item) => (
-              <div key={item.title} className="card">
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
+              <div className="feature-grid">
+                {[
+                  "出産・育児準備",
+                  "猫のお迎え準備",
+                  "料理初心者の味方",
+                  "引越し直後の整理"
+                ].map((item) => (
+                  <div key={item} className="feature-card">
+                    {item}
+                  </div>
+                ))}
               </div>
-            ))}
+              <section className="card" style={{ marginTop: 24 }}>
+                <div className="section-title">
+                  <div>
+                    <h3>編集部が選ぶおすすめ</h3>
+                    <p>比較検証済みの定番カテゴリ。</p>
+                  </div>
+                  <Link className="btn btn-ghost" href="/articles">
+                    一覧を見る
+                  </Link>
+                </div>
+                <div className="list-grid">
+                  {[
+                    "静音ミニ掃除機",
+                    "省スペース収納ボックス",
+                    "ミニ加湿器",
+                    "旅行用圧縮ポーチ",
+                    "調理が楽な包丁",
+                    "コンパクト空気清浄機"
+                  ].map((item) => (
+                    <div key={item} className="list-item">
+                      <div className="list-thumb" />
+                      <div>
+                        <strong>{item}</strong>
+                        <p>用途別に比較して迷いを減らします。</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+            <aside>
+              <div className="section-title">
+                <h3>カテゴリ</h3>
+              </div>
+              <div className="category-list">
+                {[
+                  "家電",
+                  "パソコン・周辺機器",
+                  "コスメ・化粧品",
+                  "ビューティー・ヘルス",
+                  "生活雑貨",
+                  "キッチン用品",
+                  "格安SIM",
+                  "インターネット回線"
+                ].map((item, index) => (
+                  <div key={item} className="category-item">
+                    <span className="category-icon">{index + 1}</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </aside>
           </section>
         </div>
       </main>

@@ -8,9 +8,9 @@ export default function HomePage() {
       <PublicNav />
       <section className="hero-large">
         <div className="hero-content">
-          <h1 className="hero-title">ベストなニッチを、迷わず選ぶ。</h1>
+          <h1 className="hero-title">知らなかった面白いに出会う場所。</h1>
           <p className="hero-sub">
-            公式データと比較軸で、あなたの条件に刺さる商品・サービスを紹介します。
+            普段なら出会わないような世界中のニッチを集めました。
           </p>
           <div className="hero-search">
             <input placeholder="何を探していますか？" />

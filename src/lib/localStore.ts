@@ -2,6 +2,7 @@ import { ArticleItem, TopicItem } from "./types";
 
 const TOPIC_KEY = "niche_topics";
 const ARTICLE_KEY = "niche_articles";
+const BOOKMARK_KEY = "niche_bookmarks";
 
 export function loadTopics(): TopicItem[] {
   if (typeof window === "undefined") return [];
@@ -33,4 +34,20 @@ export function loadArticles(): ArticleItem[] {
 export function saveArticles(items: ArticleItem[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(ARTICLE_KEY, JSON.stringify(items));
+}
+
+export function loadBookmarks(): string[] {
+  if (typeof window === "undefined") return [];
+  const raw = window.localStorage.getItem(BOOKMARK_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw) as string[];
+  } catch {
+    return [];
+  }
+}
+
+export function saveBookmarks(items: string[]) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(BOOKMARK_KEY, JSON.stringify(items));
 }

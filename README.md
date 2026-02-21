@@ -7,6 +7,8 @@
 - 必須カラムが埋まるまで記事作成へ送れないゲート
 - 記事作成タブ（Markdown編集 / OKで下書き化）
 - 楽天/Amazon/Yahooアフィリンクを自動ボタン化
+- 公開トップ / 記事一覧 / 記事詳細（ローカル保存データを表示）
+- ブックマーク（ローカル保存）
 
 ## 使い方
 ```bash
@@ -15,6 +17,7 @@ npm run dev
 ```
 
 - 管理画面: `/admin/topics` と `/admin/articles`
+- 公開画面: `/` と `/articles` と `/articles/[slug]`
 - データは `localStorage` に保存されます（本番はSupabase等へ置き換え前提）
 
 ## 次の拡張ポイント

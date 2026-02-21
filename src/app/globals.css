@@ -261,6 +261,38 @@ main {
   border: 1px dashed var(--border);
 }
 
+.article-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.article-card {
+  display: grid;
+  gap: 10px;
+}
+
+.article-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.bookmark-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.bookmark-btn.active {
+  background: var(--accent-3);
+  color: #fff;
+  border-color: var(--accent-3);
+}
+
 .notice {
   background: #fff7e5;
   border: 1px solid #f1d8a5;

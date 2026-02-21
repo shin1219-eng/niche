@@ -164,21 +164,8 @@ main {
   font-weight: 700;
 }
 
-.brand-icon {
-  width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #1f1f1f;
-  font-weight: 800;
-}
-
-.nav-tagline {
-  font-size: 0.75rem;
-  color: var(--muted);
+.nav-brand a {
+  font-size: 1.35rem;
 }
 
 .nav-actions {
@@ -490,6 +477,47 @@ main {
   color: #7a5a2d;
 }
 
+.footer {
+  background: #2f2f2f;
+  color: #e8e8e8;
+  padding: 48px 0 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.footer-brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.footer h4 {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  color: #c9c9c9;
+  font-size: 0.85rem;
+}
+
+.footer-bottom {
+  margin-top: 24px;
+  border-top: 1px solid #444;
+  padding-top: 16px;
+  font-size: 0.8rem;
+  color: #b7b7b7;
+}
+
 @media (max-width: 720px) {
   .navbar {
     flex-direction: column;
@@ -510,6 +538,10 @@ main {
   }
 
   .list-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
     grid-template-columns: 1fr;
   }
 }

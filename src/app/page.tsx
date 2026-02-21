@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PublicNav from "@/components/site/PublicNav";
+import Footer from "@/components/site/Footer";
 
 export default function HomePage() {
   return (
@@ -94,6 +95,7 @@ export default function HomePage() {
           </section>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

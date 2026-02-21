@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import PublicNav from "@/components/site/PublicNav";
+import Footer from "@/components/site/Footer";
 import { renderMarkdown } from "@/lib/markdown";
 import { loadArticles, loadBookmarks, saveBookmarks } from "@/lib/localStore";
 import { sampleArticles } from "@/lib/sampleData";
@@ -81,6 +82,7 @@ export default function ArticleDetailPage() {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -6,11 +6,7 @@ export default function PublicNav() {
   return (
     <nav className="navbar">
       <div className="nav-brand">
-        <span className="brand-icon">★</span>
-        <div>
-          <Link href="/">NICHE!</Link>
-          <div className="nav-tagline">商品比較サービス</div>
-        </div>
+        <Link href="/">NICHE!</Link>
       </div>
       <div className="nav-actions">
         <Link className="nav-link" href="/articles">

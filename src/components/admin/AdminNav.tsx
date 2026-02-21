@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/admin/topics", label: "ネタ収集" },
-  { href: "/admin/articles", label: "記事作成" }
+  { href: "/admin/articles", label: "記事作成" },
+  { href: "/articles", label: "記事一覧" }
 ];
 
 export default function AdminNav() {

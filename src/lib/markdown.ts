@@ -35,18 +35,25 @@ const AFFILIATE_RULES: Array<{
 export function renderMarkdown(content: string) {
   const renderer = new marked.Renderer();
 
-  renderer.link = (href, _title, text) => {
-    if (!href) return text;
+  renderer.link = (link) => {
+    const href = link.href ?? "";
+    const titleAttr = link.title ? ` title="${link.title}"` : "";
+    const label =
+      link.tokens && link.tokens.length > 0
+        ? marked.Parser.parseInline(link.tokens)
+        : (link as { text?: string }).text ?? href;
+
+    if (!href) return label;
     const rule = AFFILIATE_RULES.find((item) => item.match(href));
     if (rule) {
       return `
-        <a class="aff-button ${rule.className}" href="${href}" target="_blank" rel="noopener noreferrer">
+        <a class="aff-button ${rule.className}" href="${href}"${titleAttr} target="_blank" rel="noopener noreferrer">
           <img src="${rule.logo}" alt="${rule.label}" />
           <span>${rule.label}</span>
         </a>
       `;
     }
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    return `<a href="${href}"${titleAttr} target="_blank" rel="noopener noreferrer">${label}</a>`;
   };
 
   marked.setOptions({ gfm: true, breaks: true });

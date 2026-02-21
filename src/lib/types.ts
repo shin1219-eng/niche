@@ -31,6 +31,8 @@ export interface ArticleItem {
   slug: string;
   status: ArticleStatus;
   contentMd: string;
+  categories: string[];
+  tags: string[];
   sources: string[];
   topicIds: string[];
   updatedAt: string;

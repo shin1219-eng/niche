@@ -65,6 +65,20 @@ export default function ArticleDetailPage() {
                 <span className="badge">更新: {article.updatedAt.slice(0, 10)}</span>
               </div>
               <h1>{article.title}</h1>
+              {(article.categories.length > 0 || article.tags.length > 0) && (
+                <div className="chip-row" style={{ marginBottom: 12 }}>
+                  {article.categories.map((item) => (
+                    <span key={`cat-${item}`} className="chip">
+                      {item}
+                    </span>
+                  ))}
+                  {article.tags.map((item) => (
+                    <span key={`tag-${item}`} className="chip">
+                      #{item}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className="inline-actions" style={{ marginBottom: 12 }}>
                 <button
                   className={`bookmark-btn${isBookmarked ? " active" : ""}`}

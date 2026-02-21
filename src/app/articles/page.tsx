@@ -82,6 +82,20 @@ export default function ArticlesPage() {
                 </div>
                 <h3>{article.title}</h3>
                 <p>{getPreviewText(article.contentMd)}</p>
+                {(article.categories.length > 0 || article.tags.length > 0) && (
+                  <div className="chip-row">
+                    {article.categories.map((item) => (
+                      <span key={`cat-${item}`} className="chip">
+                        {item}
+                      </span>
+                    ))}
+                    {article.tags.map((item) => (
+                      <span key={`tag-${item}`} className="chip">
+                        #{item}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div className="chip-row">
                   <span className="chip">比較表</span>
                   <span className="chip">用途別</span>

@@ -14,6 +14,8 @@ function createEmptyArticle(): ArticleItem {
     slug: `draft-${Date.now()}`,
     status: "draft",
     contentMd: "# 新規記事\n\nここに本文を追加してください。",
+    categories: [],
+    tags: [],
     sources: [],
     topicIds: [],
     updatedAt: new Date().toISOString(),
@@ -137,6 +139,40 @@ export default function ArticlesPage() {
                   className="input"
                   value={article.slug}
                   onChange={(event) => handleUpdate(article.id, { slug: event.target.value })}
+                />
+              </div>
+            </div>
+            <div className="grid grid-2">
+              <div>
+                <label>カテゴリ（カンマ区切り）</label>
+                <input
+                  className="input"
+                  placeholder="例: 掃除, キッチン"
+                  value={article.categories.join(", ")}
+                  onChange={(event) =>
+                    handleUpdate(article.id, {
+                      categories: event.target.value
+                        .split(",")
+                        .map((entry) => entry.trim())
+                        .filter(Boolean)
+                    })
+                  }
+                />
+              </div>
+              <div>
+                <label>タグ（カンマ区切り）</label>
+                <input
+                  className="input"
+                  placeholder="例: 静音, 省スペース"
+                  value={article.tags.join(", ")}
+                  onChange={(event) =>
+                    handleUpdate(article.id, {
+                      tags: event.target.value
+                        .split(",")
+                        .map((entry) => entry.trim())
+                        .filter(Boolean)
+                    })
+                  }
                 />
               </div>
             </div>

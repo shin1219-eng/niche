@@ -79,6 +79,7 @@ export default function TopicsPage() {
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
   const [manualUrls, setManualUrls] = useState("");
+  const [manualRows, setManualRows] = useState<string[]>([""]);
 
   useEffect(() => {
     setTopics(loadTopics());
@@ -128,10 +129,12 @@ export default function TopicsPage() {
   };
 
   const handleManualAdd = () => {
-    const urls = manualUrls
+    const rowUrls = manualRows.map((entry) => entry.trim()).filter(Boolean);
+    const pastedUrls = manualUrls
       .split(/\n|,|\s/)
       .map((entry) => entry.trim())
       .filter(Boolean);
+    const urls = Array.from(new Set([...rowUrls, ...pastedUrls]));
 
     if (urls.length === 0) return;
 
@@ -149,6 +152,7 @@ export default function TopicsPage() {
 
     setTopics((prev) => [...generated, ...prev]);
     setManualUrls("");
+    setManualRows([""]);
   };
 
   const handleTopicChange = (id: string, patch: Partial<TopicItem>) => {
@@ -167,6 +171,8 @@ export default function TopicsPage() {
       slug: `topic-${topic.id.slice(0, 6)}`,
       status: "draft" as const,
       contentMd: generateArticleTemplate(topic),
+      categories: [],
+      tags: [],
       sources: topic.officialUrl ? [topic.officialUrl] : [],
       topicIds: [topic.id],
       updatedAt: new Date().toISOString(),
@@ -238,7 +244,29 @@ export default function TopicsPage() {
           </div>
         </div>
         <div style={{ marginTop: 20 }}>
-          <label>手動URL追加</label>
+          <label>手動URL追加（個別入力）</label>
+          <div className="grid" style={{ marginTop: 8 }}>
+            {manualRows.map((value, index) => (
+              <input
+                key={`row-${index}`}
+                className="input"
+                placeholder={`URL ${index + 1}`}
+                value={value}
+                onChange={(event) => {
+                  const next = [...manualRows];
+                  next[index] = event.target.value;
+                  if (index === manualRows.length - 1 && event.target.value.trim() !== "") {
+                    next.push("");
+                  }
+                  setManualRows(next);
+                }}
+              />
+            ))}
+          </div>
+          <div className="notice" style={{ marginTop: 8 }}>
+            URLを入力すると次の空欄が自動で追加されます。
+          </div>
+          <label style={{ marginTop: 16, display: "block" }}>手動URL追加（一括ペースト）</label>
           <textarea
             className="textarea"
             placeholder="1行1URLで貼り付け"

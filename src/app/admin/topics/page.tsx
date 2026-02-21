@@ -15,10 +15,11 @@ import { generateArticleTemplate } from "@/lib/templates";
 const CATEGORIES = [
   "掃除",
   "キッチン",
-  "収納・片付け",
+  "収納",
+  "片付け",
   "ガジェット",
-  "旅行・外出",
-  "サービス"
+  "旅行ガイドサービス",
+  "会社"
 ];
 
 const FIELD_LABELS: Record<string, string> = {

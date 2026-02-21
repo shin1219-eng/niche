@@ -20,7 +20,7 @@ export const sampleArticles: ArticleItem[] = [
     slug: "travel-compact-storage",
     status: "published",
     contentMd: `# 旅行用の省スペース収納ボックス\n\n**結論（おすすめ3つ）**\n1. 折りたたみ型\n2. 圧縮ベルト付き\n3. 仕切り付きポーチ\n\n## 刺さる条件\n荷物を減らしてスーツケースに収めたい人向け。\n\n## 購入導線\n- https://www.rakuten.co.jp/\n- https://shopping.yahoo.co.jp/\n` ,
-    categories: ["旅行・外出"],
+    categories: ["旅行ガイドサービス"],
     tags: ["省スペース", "圧縮"],
     sources: ["https://example.com"],
     topicIds: [],

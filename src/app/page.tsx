@@ -30,10 +30,10 @@ export default function HomePage() {
               </div>
               <div className="feature-grid">
                 {[
-                  "出産・育児準備",
-                  "猫のお迎え準備",
-                  "料理初心者の味方",
-                  "引越し直後の整理"
+                  "静音で暮らす",
+                  "省スペース生活",
+                  "持ち運び最優先",
+                  "片付けの時短"
                 ].map((item) => (
                   <div key={item} className="feature-card">
                     {item}
@@ -76,14 +76,13 @@ export default function HomePage() {
               </div>
               <div className="category-list">
                 {[
-                  "家電",
-                  "パソコン・周辺機器",
-                  "コスメ・化粧品",
-                  "ビューティー・ヘルス",
-                  "生活雑貨",
-                  "キッチン用品",
-                  "格安SIM",
-                  "インターネット回線"
+                  "掃除",
+                  "キッチン",
+                  "収納",
+                  "片付け",
+                  "ガジェット",
+                  "旅行ガイドサービス",
+                  "会社"
                 ].map((item, index) => (
                   <div key={item} className="category-item">
                     <span className="category-icon">{index + 1}</span>

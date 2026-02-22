@@ -62,11 +62,11 @@ export default function MyPage() {
                 <h2>マイページ</h2>
                 <p>ブックマークとカテゴリ購読をまとめて管理できます。</p>
               </div>
-              <span className="badge">ログイン限定</span>
+              <span className="badge">ブックマーク管理</span>
             </div>
             {!signedIn && (
               <div className="notice">
-                マイページを見るにはログインが必要です。
+                ブックマーク/購読を使いたい場合のみログインしてください。
                 <button
                   className="btn btn-primary"
                   type="button"

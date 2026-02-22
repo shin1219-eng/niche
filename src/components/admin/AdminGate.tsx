@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import { adminEmailsLabel, isAdminEmail } from "@/lib/adminAuth";
+import { isAdminEmail } from "@/lib/adminAuth";
 
 type GateStatus = "loading" | "allowed" | "denied" | "missing";
 
@@ -67,8 +67,8 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
         </div>
       ) : (
         <div className="notice">
-          許可メール: {adminEmailsLabel}
-          {email ? ` / 現在: ${email}` : ""}
+          ログイン中のメールで管理者権限を確認しています。
+          {email ? `（${email}）` : ""}
         </div>
       )}
     </section>

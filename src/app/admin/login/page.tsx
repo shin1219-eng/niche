@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import { adminEmailsLabel, isAdminEmail } from "@/lib/adminAuth";
+import { isAdminEmail } from "@/lib/adminAuth";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -100,9 +100,6 @@ export default function AdminLoginPage() {
         <button className="btn btn-primary" type="button" onClick={handleLogin} disabled={busy}>
           {busy ? "ログイン中..." : "ログイン"}
         </button>
-        <div className="notice">
-          許可メール: {adminEmailsLabel}
-        </div>
       </div>
     </section>
   );

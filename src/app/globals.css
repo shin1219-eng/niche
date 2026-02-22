@@ -233,6 +233,13 @@ main {
   box-shadow: 0 6px 18px rgba(20, 18, 16, 0.12);
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 .btn-primary {
   background: var(--accent);
   color: #1f1f1f;

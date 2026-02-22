@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   REQUIRED_TOPIC_FIELDS,
   SOURCE_LABELS,
@@ -74,6 +75,7 @@ function getMissingFields(topic: TopicItem) {
 }
 
 export default function TopicsPage() {
+  const router = useRouter();
   const [topics, setTopics] = useState<TopicItem[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [source, setSource] = useState<SourceType>("rakuten_market");
@@ -171,8 +173,11 @@ export default function TopicsPage() {
     );
   };
 
-  const handleSendToArticles = () => {
-    if (!canSend) return;
+  const handleSendToArticles = async () => {
+    if (!canSend) {
+      window.alert("チェックを入れて必須項目を埋めてから送信してください。");
+      return;
+    }
 
     const newArticles = selectedTopics.map((topic) => ({
       id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
@@ -187,7 +192,7 @@ export default function TopicsPage() {
       updatedAt: new Date().toISOString(),
       publishedAt: null
     }));
-    createArticles(newArticles);
+    await createArticles(newArticles);
 
     setTopics((prev) =>
       prev.map((topic) =>
@@ -195,6 +200,7 @@ export default function TopicsPage() {
       )
     );
     setSelectedIds([]);
+    router.push("/admin/articles");
   };
 
   return (

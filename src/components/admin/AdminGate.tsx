@@ -13,7 +13,8 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!supabase) {
+    const client = supabase;
+    if (!client) {
       setStatus("missing");
       return;
     }
@@ -21,7 +22,7 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     let active = true;
 
     const check = async () => {
-      const { data } = await supabase.auth.getSession();
+      const { data } = await client.auth.getSession();
       if (!active) return;
       const sessionEmail = data.session?.user?.email ?? null;
       setEmail(sessionEmail);
@@ -31,7 +32,7 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
       }
       if (!isAdminEmail(sessionEmail)) {
         setStatus("denied");
-        await supabase.auth.signOut();
+        await client.auth.signOut();
         router.replace("/admin/login?denied=1");
         return;
       }
@@ -39,7 +40,7 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     };
 
     check();
-    const { data: subscription } = supabase.auth.onAuthStateChange(() => {
+    const { data: subscription } = client.auth.onAuthStateChange(() => {
       check();
     });
 

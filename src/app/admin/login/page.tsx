@@ -13,6 +13,18 @@ export default function AdminLoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  const formatLoginError = (message?: string) => {
+    if (!message) return "ログインに失敗しました。メールとパスワードを確認してください。";
+    const lower = message.toLowerCase();
+    if (lower.includes("invalid login credentials")) {
+      return "ログイン情報が一致しません。メールとパスワードを確認してください。";
+    }
+    if (lower.includes("email not confirmed")) {
+      return "メール未確認です。SupabaseのUsersでConfirmしてください。";
+    }
+    return `ログインに失敗しました: ${message}`;
+  };
+
   useEffect(() => {
     if (!supabase) return;
     if (typeof window !== "undefined") {
@@ -39,7 +51,7 @@ export default function AdminLoginPage() {
       password
     });
     if (loginError) {
-      setError("ログインに失敗しました。メールとパスワードを確認してください。");
+      setError(formatLoginError(loginError.message));
       setBusy(false);
       return;
     }

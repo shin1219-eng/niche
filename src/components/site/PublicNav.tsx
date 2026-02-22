@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { isAdminEmail } from "@/lib/adminAuth";
 
 export default function PublicNav() {
   const [email, setEmail] = useState<string | null>(null);
@@ -43,9 +44,11 @@ export default function PublicNav() {
             ログイン
           </Link>
         )}
-        <Link className="nav-link" href="/admin/login">
-          管理
-        </Link>
+        {email && isAdminEmail(email) && (
+          <Link className="nav-link" href="/admin/login">
+            管理
+          </Link>
+        )}
       </div>
     </nav>
   );

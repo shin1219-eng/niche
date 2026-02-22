@@ -12,7 +12,7 @@ export default function PublicNav() {
         <Link className="nav-link" href="/articles">
           記事一覧
         </Link>
-        <Link className="nav-link" href="/admin/topics">
+        <Link className="nav-link" href="/admin/login">
           ログイン
         </Link>
       </div>

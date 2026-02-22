@@ -9,7 +9,7 @@ import { renderMarkdown } from "@/lib/markdown";
 import { loadBookmarks, saveBookmarks } from "@/lib/localStore";
 import { fetchArticles } from "@/lib/store";
 import { sampleArticles } from "@/lib/sampleData";
-import { ArticleItem, STATUS_LABELS } from "@/lib/types";
+import { ArticleItem } from "@/lib/types";
 
 export default function ArticleDetailPage() {
   const params = useParams();
@@ -20,7 +20,10 @@ export default function ArticleDetailPage() {
   useEffect(() => {
     fetchArticles().then((items) => {
       const base = items.length > 0 ? items : sampleArticles;
-      const found = base.find((item) => item.slug === slug) ?? null;
+      const found =
+        items.length > 0
+          ? base.find((item) => item.slug === slug && item.status === "published") ?? null
+          : base.find((item) => item.slug === slug) ?? null;
       setArticle(found);
     });
     setBookmarks(loadBookmarks());
@@ -63,7 +66,6 @@ export default function ArticleDetailPage() {
             <section className="card">
               <div className="article-thumb" />
               <div className="article-meta">
-                <span className="badge">{STATUS_LABELS[article.status]}</span>
                 <span className="badge">更新: {article.updatedAt.slice(0, 10)}</span>
               </div>
               <h1>{article.title}</h1>

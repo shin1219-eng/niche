@@ -8,7 +8,8 @@ const ARTICLE_STATUS_ORDER: Array<ArticleItem["status"]> = [
   "draft",
   "approved",
   "published",
-  "revise"
+  "revise",
+  "archived"
 ];
 
 export default function AdminDashboardPage() {
@@ -65,7 +66,7 @@ export default function AdminDashboardPage() {
           <div className="metric-card">
             <div className="metric-title">記事総数</div>
             <div className="metric-value">{articleStats.total}</div>
-            <div className="metric-sub">作成中/下書き/公開/要修正</div>
+            <div className="metric-sub">作成中/下書き/公開/要修正/アーカイブ</div>
           </div>
           <div className="metric-card">
             <div className="metric-title">公開済み</div>

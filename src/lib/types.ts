@@ -7,7 +7,7 @@ export type SourceType =
 
 export type TopicStatus = "inbox" | "ready" | "sent_to_article";
 
-export type ArticleStatus = "draft" | "approved" | "published" | "revise";
+export type ArticleStatus = "draft" | "approved" | "published" | "revise" | "archived";
 
 export type ArticleLinkVendor = "rakuten" | "amazon" | "yahoo";
 
@@ -60,5 +60,6 @@ export const STATUS_LABELS: Record<ArticleStatus, string> = {
   draft: "作成中",
   approved: "下書き",
   published: "公開",
-  revise: "要修正"
+  revise: "要修正",
+  archived: "アーカイブ"
 };

@@ -7,7 +7,7 @@ import Footer from "@/components/site/Footer";
 import { loadBookmarks, saveBookmarks } from "@/lib/localStore";
 import { fetchArticles } from "@/lib/store";
 import { sampleArticles } from "@/lib/sampleData";
-import { ArticleItem, STATUS_LABELS } from "@/lib/types";
+import { ArticleItem } from "@/lib/types";
 
 const getPreviewText = (content: string) => {
   const lines = content
@@ -29,10 +29,8 @@ export default function ArticlesPage() {
 
   const visibleArticles = useMemo(() => {
     const base = articles.length > 0 ? articles : sampleArticles;
-    const filtered = base.filter((article) =>
-      ["approved", "published"].includes(article.status)
-    );
-    const list = filtered.length > 0 ? filtered : base;
+    const filtered = base.filter((article) => article.status === "published");
+    const list = articles.length > 0 ? filtered : base;
     if (!showBookmarksOnly) return list;
     return list.filter((article) => bookmarks.includes(article.slug));
   }, [articles, bookmarks, showBookmarksOnly]);
@@ -68,7 +66,7 @@ export default function ArticlesPage() {
               </div>
             </div>
             <div className="notice">
-              管理画面で承認した記事が表示対象です。MVPではローカル保存のため、
+              公開済みの記事のみ表示しています。MVPではローカル保存のため、
               ブラウザごとに内容が変わります。
             </div>
           </section>
@@ -78,7 +76,6 @@ export default function ArticlesPage() {
               <article key={article.id} className="card article-card">
                 <div className="article-thumb" />
                 <div className="article-meta">
-                  <span className="badge">{STATUS_LABELS[article.status]}</span>
                   <span className="badge">更新: {article.updatedAt.slice(0, 10)}</span>
                 </div>
                 <h3>{article.title}</h3>

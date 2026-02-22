@@ -63,6 +63,18 @@ export default function ArticlesPage() {
     handleUpdate(id, { status: "approved" });
   };
 
+  const handlePublish = (id: string) => {
+    handleUpdate(id, { status: "published", publishedAt: new Date().toISOString() });
+  };
+
+  const handleUnpublish = (id: string) => {
+    handleUpdate(id, { status: "approved", publishedAt: null });
+  };
+
+  const handleArchive = (id: string) => {
+    handleUpdate(id, { status: "archived", publishedAt: null });
+  };
+
   const handleMarkRevise = (id: string) => {
     handleUpdate(id, { status: "revise" });
   };
@@ -89,7 +101,7 @@ export default function ArticlesPage() {
           </div>
         </div>
         <div className="notice">
-          OKを押すと「下書き」ステータスに移行します。公開は別工程で行います。
+          OKで下書き、公開ボタンで公開。非公開は下書きへ戻すかアーカイブに移します。
         </div>
       </section>
 
@@ -112,6 +124,23 @@ export default function ArticlesPage() {
               >
                 OK（下書きへ）
               </button>
+              {article.status === "published" ? (
+                <button
+                  className="btn btn-ghost"
+                  type="button"
+                  onClick={() => handleUnpublish(article.id)}
+                >
+                  非公開にする
+                </button>
+              ) : (
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={() => handlePublish(article.id)}
+                >
+                  公開
+                </button>
+              )}
               <button
                 className="btn btn-ghost"
                 type="button"
@@ -127,6 +156,13 @@ export default function ArticlesPage() {
                 onClick={() => handleMarkRevise(article.id)}
               >
                 要修正
+              </button>
+              <button
+                className="btn btn-ghost"
+                type="button"
+                onClick={() => handleArchive(article.id)}
+              >
+                アーカイブ
               </button>
             </div>
           </div>

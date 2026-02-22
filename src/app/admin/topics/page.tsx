@@ -9,7 +9,7 @@ import {
   TopicItem,
   SourceType
 } from "@/lib/types";
-import { loadArticles, loadTopics, saveArticles, saveTopics } from "@/lib/localStore";
+import { createArticles, fetchTopics, syncTopics } from "@/lib/store";
 import { generateArticleTemplate } from "@/lib/templates";
 
 const CATEGORIES = [
@@ -82,13 +82,22 @@ export default function TopicsPage() {
   const [manualUrls, setManualUrls] = useState("");
   const [manualRows, setManualRows] = useState<string[]>([""]);
 
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
-    setTopics(loadTopics());
+    fetchTopics().then((items) => {
+      setTopics(items);
+      setLoaded(true);
+    });
   }, []);
 
   useEffect(() => {
-    saveTopics(topics);
-  }, [topics]);
+    if (!loaded) return;
+    const timer = setTimeout(() => {
+      syncTopics(topics);
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [topics, loaded]);
 
   const missingMap = useMemo(() => {
     const map: Record<string, string[]> = {};
@@ -165,7 +174,6 @@ export default function TopicsPage() {
   const handleSendToArticles = () => {
     if (!canSend) return;
 
-    const articles = loadArticles();
     const newArticles = selectedTopics.map((topic) => ({
       id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
       title: topic.title,
@@ -179,8 +187,7 @@ export default function TopicsPage() {
       updatedAt: new Date().toISOString(),
       publishedAt: null
     }));
-
-    saveArticles([...newArticles, ...articles]);
+    createArticles(newArticles);
 
     setTopics((prev) =>
       prev.map((topic) =>

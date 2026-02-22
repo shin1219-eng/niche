@@ -6,7 +6,8 @@ import Link from "next/link";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
 import { renderMarkdown } from "@/lib/markdown";
-import { loadArticles, loadBookmarks, saveBookmarks } from "@/lib/localStore";
+import { loadBookmarks, saveBookmarks } from "@/lib/localStore";
+import { fetchArticles } from "@/lib/store";
 import { sampleArticles } from "@/lib/sampleData";
 import { ArticleItem, STATUS_LABELS } from "@/lib/types";
 
@@ -17,10 +18,11 @@ export default function ArticleDetailPage() {
   const [bookmarks, setBookmarks] = useState<string[]>([]);
 
   useEffect(() => {
-    const stored = loadArticles();
-    const base = stored.length > 0 ? stored : sampleArticles;
-    const found = base.find((item) => item.slug === slug) ?? null;
-    setArticle(found);
+    fetchArticles().then((items) => {
+      const base = items.length > 0 ? items : sampleArticles;
+      const found = base.find((item) => item.slug === slug) ?? null;
+      setArticle(found);
+    });
     setBookmarks(loadBookmarks());
   }, [slug]);
 

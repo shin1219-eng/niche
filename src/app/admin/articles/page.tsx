@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { nanoid } from "nanoid";
 import { ArticleItem, STATUS_LABELS } from "@/lib/types";
-import { loadArticles, saveArticles } from "@/lib/localStore";
+import { fetchArticles, syncArticles } from "@/lib/store";
 import { renderMarkdown } from "@/lib/markdown";
 
 function createEmptyArticle(): ArticleItem {
@@ -26,14 +26,22 @@ function createEmptyArticle(): ArticleItem {
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<ArticleItem[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setArticles(loadArticles());
+    fetchArticles().then((items) => {
+      setArticles(items);
+      setLoaded(true);
+    });
   }, []);
 
   useEffect(() => {
-    saveArticles(articles);
-  }, [articles]);
+    if (!loaded) return;
+    const timer = setTimeout(() => {
+      syncArticles(articles);
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [articles, loaded]);
 
   const rendered = useMemo(() => {
     const map: Record<string, string> = {};

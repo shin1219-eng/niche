@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "latest",
     "marked": "latest",
     "next": "latest",
     "nanoid": "latest",

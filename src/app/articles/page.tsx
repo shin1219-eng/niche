@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
-import { loadArticles, loadBookmarks, saveBookmarks } from "@/lib/localStore";
+import { loadBookmarks, saveBookmarks } from "@/lib/localStore";
+import { fetchArticles } from "@/lib/store";
 import { sampleArticles } from "@/lib/sampleData";
 import { ArticleItem, STATUS_LABELS } from "@/lib/types";
 
@@ -22,7 +23,7 @@ export default function ArticlesPage() {
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
 
   useEffect(() => {
-    setArticles(loadArticles());
+    fetchArticles().then((items) => setArticles(items));
     setBookmarks(loadBookmarks());
   }, []);
 

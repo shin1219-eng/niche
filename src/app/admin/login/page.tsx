@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { adminEmailsLabel, isAdminEmail } from "@/lib/adminAuth";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const denied = searchParams.get("denied") === "1";
+  const [denied, setDenied] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -16,6 +15,10 @@ export default function AdminLoginPage() {
 
   useEffect(() => {
     if (!supabase) return;
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setDenied(params.get("denied") === "1");
+    }
     supabase.auth.getSession().then(({ data }) => {
       const sessionEmail = data.session?.user?.email ?? null;
       if (sessionEmail && isAdminEmail(sessionEmail)) {

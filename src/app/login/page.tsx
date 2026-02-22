@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
@@ -11,8 +11,7 @@ type Mode = "signin" | "signup";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const nextPath = searchParams.get("next") ?? "/articles";
+  const [nextPath, setNextPath] = useState("/articles");
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +20,11 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!supabase) return;
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get("next");
+      if (next) setNextPath(next);
+    }
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
         router.replace(nextPath);

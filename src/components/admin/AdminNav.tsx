@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
+  { href: "/admin/dashboard", label: "ダッシュボード" },
   { href: "/admin/topics", label: "ネタ収集" },
   { href: "/admin/articles", label: "記事作成" },
   { href: "/articles", label: "記事一覧" }

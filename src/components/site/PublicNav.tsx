@@ -49,11 +49,6 @@ export default function PublicNav() {
             マイページ
           </Link>
         )}
-        {email && isAdminEmail(email) && (
-          <Link className="nav-link" href="/admin/login">
-            管理
-          </Link>
-        )}
       </div>
     </nav>
   );

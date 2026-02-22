@@ -3,6 +3,8 @@ import { ArticleItem, TopicItem } from "./types";
 const TOPIC_KEY = "niche_topics";
 const ARTICLE_KEY = "niche_articles";
 const BOOKMARK_KEY = "niche_bookmarks";
+const CATEGORY_KEY = "niche_categories";
+const TAG_KEY = "niche_tags";
 
 export function loadTopics(): TopicItem[] {
   if (typeof window === "undefined") return [];
@@ -50,4 +52,36 @@ export function loadBookmarks(): string[] {
 export function saveBookmarks(items: string[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(BOOKMARK_KEY, JSON.stringify(items));
+}
+
+export function loadCategories() {
+  if (typeof window === "undefined") return [];
+  const raw = window.localStorage.getItem(CATEGORY_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw) as Array<Record<string, any>>;
+  } catch {
+    return [];
+  }
+}
+
+export function saveCategories(items: Array<Record<string, any>>) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(CATEGORY_KEY, JSON.stringify(items));
+}
+
+export function loadTags() {
+  if (typeof window === "undefined") return [];
+  const raw = window.localStorage.getItem(TAG_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw) as Array<Record<string, any>>;
+  } catch {
+    return [];
+  }
+}
+
+export function saveTags(items: Array<Record<string, any>>) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(TAG_KEY, JSON.stringify(items));
 }

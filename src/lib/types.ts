@@ -11,6 +11,22 @@ export type ArticleStatus = "draft" | "approved" | "published" | "revise" | "arc
 
 export type ArticleLinkVendor = "rakuten" | "amazon" | "yahoo";
 
+export interface CategoryItem {
+  id: string;
+  name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TagItem {
+  id: string;
+  name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface TopicItem {
   id: string;
   source: SourceType;

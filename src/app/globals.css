@@ -438,6 +438,15 @@ main {
   font-weight: 600;
 }
 
+.chip-btn {
+  cursor: pointer;
+}
+
+.chip-btn.active {
+  background: #bfe7df;
+  border-color: #9fd7cc;
+}
+
 .list-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

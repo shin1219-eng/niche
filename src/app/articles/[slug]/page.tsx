@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
@@ -12,10 +12,12 @@ import { sampleArticles } from "@/lib/sampleData";
 import { ArticleItem } from "@/lib/types";
 
 export default function ArticleDetailPage() {
+  const router = useRouter();
   const params = useParams();
   const slug = typeof params.slug === "string" ? params.slug : params.slug?.[0];
   const [article, setArticle] = useState<ArticleItem | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     fetchArticles().then((items) => {
@@ -26,7 +28,10 @@ export default function ArticleDetailPage() {
           : base.find((item) => item.slug === slug) ?? null;
       setArticle(found);
     });
-    fetchBookmarks().then(setBookmarks);
+    fetchBookmarks().then(({ slugs, signedIn: isSignedIn }) => {
+      setBookmarks(slugs);
+      setSignedIn(isSignedIn);
+    });
   }, [slug]);
 
   const rendered = useMemo(() => {
@@ -36,6 +41,10 @@ export default function ArticleDetailPage() {
 
   const toggleBookmark = () => {
     if (!article) return;
+    if (!signedIn) {
+      router.push(`/login?next=/articles/${article.slug}`);
+      return;
+    }
     setBookmarks((prev) => {
       const isActive = prev.includes(article.slug);
       const next = isActive
@@ -90,7 +99,7 @@ export default function ArticleDetailPage() {
                   onClick={toggleBookmark}
                   type="button"
                 >
-                  {isBookmarked ? "ブックマーク済み" : "ブックマーク"}
+                  {signedIn ? (isBookmarked ? "ブックマーク済み" : "ブックマーク") : "ログインして保存"}
                 </button>
                 <Link className="btn btn-ghost" href="/articles">
                   記事一覧へ

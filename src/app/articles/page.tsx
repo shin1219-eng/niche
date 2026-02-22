@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
 import { fetchBookmarks, persistBookmark } from "@/lib/bookmarkStore";
@@ -18,13 +19,18 @@ const getPreviewText = (content: string) => {
 };
 
 export default function ArticlesPage() {
+  const router = useRouter();
   const [articles, setArticles] = useState<ArticleItem[]>([]);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     fetchArticles().then((items) => setArticles(items));
-    fetchBookmarks().then(setBookmarks);
+    fetchBookmarks().then(({ slugs, signedIn: isSignedIn }) => {
+      setBookmarks(slugs);
+      setSignedIn(isSignedIn);
+    });
   }, []);
 
   const visibleArticles = useMemo(() => {
@@ -36,6 +42,10 @@ export default function ArticlesPage() {
   }, [articles, bookmarks, showBookmarksOnly]);
 
   const toggleBookmark = (slug: string) => {
+    if (!signedIn) {
+      router.push("/login?next=/articles");
+      return;
+    }
     setBookmarks((prev) => {
       const isActive = prev.includes(slug);
       const next = isActive ? prev.filter((item) => item !== slug) : [...prev, slug];
@@ -60,6 +70,7 @@ export default function ArticlesPage() {
                   className={`bookmark-btn${showBookmarksOnly ? " active" : ""}`}
                   onClick={() => setShowBookmarksOnly((prev) => !prev)}
                   type="button"
+                  disabled={!signedIn}
                 >
                   ブックマークのみ
                 </button>
@@ -67,9 +78,17 @@ export default function ArticlesPage() {
               </div>
             </div>
             <div className="notice">
-              公開済みの記事のみ表示しています。ブックマークはDB保存ですが、
-              ログインがない場合は端末単位になります。
+              公開済みの記事のみ表示しています。ブックマークはログインした人だけ使えます。
             </div>
+            {!signedIn && (
+              <div className="notice">
+                ブックマークを使うには
+                <Link className="nav-link" href="/login">
+                  ログイン
+                </Link>
+                が必要です。
+              </div>
+            )}
           </section>
 
           <section className="article-grid" style={{ marginTop: 20 }}>
@@ -109,7 +128,11 @@ export default function ArticlesPage() {
                     onClick={() => toggleBookmark(article.slug)}
                     type="button"
                   >
-                    {bookmarks.includes(article.slug) ? "ブックマーク済み" : "ブックマーク"}
+                    {signedIn
+                      ? bookmarks.includes(article.slug)
+                        ? "ブックマーク済み"
+                        : "ブックマーク"
+                      : "ログインして保存"}
                   </button>
                 </div>
               </article>

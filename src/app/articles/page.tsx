@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
-import { loadBookmarks, saveBookmarks } from "@/lib/localStore";
+import { fetchBookmarks, persistBookmark } from "@/lib/bookmarkStore";
 import { fetchArticles } from "@/lib/store";
 import { sampleArticles } from "@/lib/sampleData";
 import { ArticleItem } from "@/lib/types";
@@ -24,7 +24,7 @@ export default function ArticlesPage() {
 
   useEffect(() => {
     fetchArticles().then((items) => setArticles(items));
-    setBookmarks(loadBookmarks());
+    fetchBookmarks().then(setBookmarks);
   }, []);
 
   const visibleArticles = useMemo(() => {
@@ -37,8 +37,9 @@ export default function ArticlesPage() {
 
   const toggleBookmark = (slug: string) => {
     setBookmarks((prev) => {
-      const next = prev.includes(slug) ? prev.filter((item) => item !== slug) : [...prev, slug];
-      saveBookmarks(next);
+      const isActive = prev.includes(slug);
+      const next = isActive ? prev.filter((item) => item !== slug) : [...prev, slug];
+      persistBookmark(slug, !isActive);
       return next;
     });
   };
@@ -66,8 +67,8 @@ export default function ArticlesPage() {
               </div>
             </div>
             <div className="notice">
-              公開済みの記事のみ表示しています。MVPではローカル保存のため、
-              ブラウザごとに内容が変わります。
+              公開済みの記事のみ表示しています。ブックマークはDB保存ですが、
+              ログインがない場合は端末単位になります。
             </div>
           </section>
 

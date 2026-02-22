@@ -6,7 +6,7 @@ import Link from "next/link";
 import PublicNav from "@/components/site/PublicNav";
 import Footer from "@/components/site/Footer";
 import { renderMarkdown } from "@/lib/markdown";
-import { loadBookmarks, saveBookmarks } from "@/lib/localStore";
+import { fetchBookmarks, persistBookmark } from "@/lib/bookmarkStore";
 import { fetchArticles } from "@/lib/store";
 import { sampleArticles } from "@/lib/sampleData";
 import { ArticleItem } from "@/lib/types";
@@ -26,7 +26,7 @@ export default function ArticleDetailPage() {
           : base.find((item) => item.slug === slug) ?? null;
       setArticle(found);
     });
-    setBookmarks(loadBookmarks());
+    fetchBookmarks().then(setBookmarks);
   }, [slug]);
 
   const rendered = useMemo(() => {
@@ -37,10 +37,11 @@ export default function ArticleDetailPage() {
   const toggleBookmark = () => {
     if (!article) return;
     setBookmarks((prev) => {
-      const next = prev.includes(article.slug)
+      const isActive = prev.includes(article.slug);
+      const next = isActive
         ? prev.filter((item) => item !== article.slug)
         : [...prev, article.slug];
-      saveBookmarks(next);
+      persistBookmark(article.slug, !isActive);
       return next;
     });
   };

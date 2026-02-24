@@ -7,11 +7,37 @@ import {
 } from "@/lib/localStore";
 import { ArticleItem, TopicItem } from "@/lib/types";
 
+const normalizeTopic = (topic: TopicItem): TopicItem => ({
+  ...topic,
+  productName: topic.productName ?? "",
+  maker: topic.maker ?? "",
+  price: topic.price ?? "",
+  nicheCondition: topic.nicheCondition ?? "",
+  story: topic.story ?? "",
+  coreFeatures: topic.coreFeatures ?? "",
+  heroImageUrl: topic.heroImageUrl ?? "",
+  usageImageUrl: topic.usageImageUrl ?? "",
+  searchKeyword: topic.searchKeyword ?? "",
+  articleType: topic.articleType ?? "revenue",
+  painSpecific: topic.painSpecific ?? false,
+  solutionFocused: topic.solutionFocused ?? false,
+  alternativesWeak: topic.alternativesWeak ?? false
+});
+
 const toTopicRow = (topic: TopicItem) => ({
   id: topic.id,
   source: topic.source,
   title: topic.title,
+  product_name: topic.productName,
+  maker: topic.maker,
+  price: topic.price,
   niche_condition: topic.nicheCondition,
+  story: topic.story,
+  core_features: topic.coreFeatures,
+  hero_image_url: topic.heroImageUrl,
+  usage_image_url: topic.usageImageUrl,
+  search_keyword: topic.searchKeyword,
+  article_type: topic.articleType,
   pain_specific: topic.painSpecific,
   solution_focused: topic.solutionFocused,
   alternatives_weak: topic.alternativesWeak,
@@ -29,7 +55,16 @@ const fromTopicRow = (row: Record<string, any>): TopicItem => ({
   id: row.id,
   source: row.source,
   title: row.title ?? "",
+  productName: row.product_name ?? "",
+  maker: row.maker ?? "",
+  price: row.price ?? "",
   nicheCondition: row.niche_condition ?? "",
+  story: row.story ?? "",
+  coreFeatures: row.core_features ?? "",
+  heroImageUrl: row.hero_image_url ?? "",
+  usageImageUrl: row.usage_image_url ?? "",
+  searchKeyword: row.search_keyword ?? "",
+  articleType: row.article_type ?? "revenue",
   painSpecific: row.pain_specific ?? false,
   solutionFocused: row.solution_focused ?? false,
   alternativesWeak: row.alternatives_weak ?? false,
@@ -47,6 +82,7 @@ const toArticleRow = (article: ArticleItem) => ({
   title: article.title,
   slug: article.slug,
   status: article.status,
+  article_type: article.articleType ?? null,
   content_md: article.contentMd,
   categories: article.categories ?? [],
   tags: article.tags ?? [],
@@ -61,6 +97,7 @@ const fromArticleRow = (row: Record<string, any>): ArticleItem => ({
   title: row.title ?? "",
   slug: row.slug ?? "",
   status: row.status ?? "draft",
+  articleType: row.article_type ?? undefined,
   contentMd: row.content_md ?? "",
   categories: row.categories ?? [],
   tags: row.tags ?? [],
@@ -71,7 +108,7 @@ const fromArticleRow = (row: Record<string, any>): ArticleItem => ({
 });
 
 export async function fetchTopics(): Promise<TopicItem[]> {
-  if (!supabase) return loadTopicsLocal();
+  if (!supabase) return loadTopicsLocal().map((item) => normalizeTopic(item as TopicItem));
   const { data } = await supabase
     .from("topics")
     .select("*")

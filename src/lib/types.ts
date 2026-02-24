@@ -9,6 +9,8 @@ export type TopicStatus = "inbox" | "ready" | "sent_to_article";
 
 export type ArticleStatus = "draft" | "approved" | "published" | "revise" | "archived";
 
+export type ArticleType = "revenue" | "discovery";
+
 export type ArticleLinkVendor = "rakuten" | "amazon" | "yahoo";
 
 export interface CategoryItem {
@@ -31,7 +33,16 @@ export interface TopicItem {
   id: string;
   source: SourceType;
   title: string;
+  productName: string;
+  maker: string;
+  price: string;
   nicheCondition: string;
+  story: string;
+  coreFeatures: string;
+  heroImageUrl: string;
+  usageImageUrl: string;
+  searchKeyword: string;
+  articleType: ArticleType;
   painSpecific: boolean;
   solutionFocused: boolean;
   alternativesWeak: boolean;
@@ -49,6 +60,7 @@ export interface ArticleItem {
   title: string;
   slug: string;
   status: ArticleStatus;
+  articleType?: ArticleType;
   contentMd: string;
   categories: string[];
   tags: string[];
@@ -60,14 +72,17 @@ export interface ArticleItem {
 
 export const REQUIRED_TOPIC_FIELDS: Array<keyof TopicItem> = [
   "title",
+  "productName",
+  "maker",
+  "price",
   "nicheCondition",
+  "story",
+  "coreFeatures",
+  "heroImageUrl",
   "painSpecific",
   "solutionFocused",
   "alternativesWeak",
-  "compareAxes",
-  "officialUrl",
-  "imageUrl",
-  "priceRange"
+  "articleType"
 ];
 
 export const SOURCE_LABELS: Record<SourceType, string> = {

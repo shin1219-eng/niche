@@ -25,7 +25,16 @@ const CATEGORIES = [
 
 const FIELD_LABELS: Record<string, string> = {
   title: "タイトル",
+  productName: "商品名",
+  maker: "メーカー",
+  price: "価格",
   nicheCondition: "刺さる条件",
+  story: "開発背景",
+  coreFeatures: "コア機能",
+  heroImageUrl: "アイキャッチ",
+  usageImageUrl: "利用シーン",
+  searchKeyword: "検索KW",
+  articleType: "記事タイプ",
   painSpecific: "ペイン具体",
   solutionFocused: "一点突破",
   alternativesWeak: "妥協案のみ",
@@ -43,17 +52,34 @@ const SOURCE_OPTIONS: { value: SourceType; label: string }[] = [
   { value: "manual", label: "手動" }
 ];
 
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\u3040-\u30ff\u4e00-\u9faf]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+}
+
 function createTopic(base: Partial<TopicItem> & { source: SourceType }) {
   const now = new Date().toISOString();
-    return {
-      id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
-      title: base.title ?? "",
-      nicheCondition: base.nicheCondition ?? "",
-      painSpecific: base.painSpecific ?? false,
-      solutionFocused: base.solutionFocused ?? false,
-      alternativesWeak: base.alternativesWeak ?? false,
-      compareAxes: base.compareAxes ?? [],
-      officialUrl: base.officialUrl ?? "",
+  return {
+    id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
+    title: base.title ?? "",
+    productName: base.productName ?? "",
+    maker: base.maker ?? "",
+    price: base.price ?? "",
+    nicheCondition: base.nicheCondition ?? "",
+    story: base.story ?? "",
+    coreFeatures: base.coreFeatures ?? "",
+    heroImageUrl: base.heroImageUrl ?? "",
+    usageImageUrl: base.usageImageUrl ?? "",
+    searchKeyword: base.searchKeyword ?? "",
+    articleType: base.articleType ?? "revenue",
+    painSpecific: base.painSpecific ?? false,
+    solutionFocused: base.solutionFocused ?? false,
+    alternativesWeak: base.alternativesWeak ?? false,
+    compareAxes: base.compareAxes ?? [],
+    officialUrl: base.officialUrl ?? "",
     imageUrl: base.imageUrl ?? "",
     priceRange: base.priceRange ?? "",
     notes: base.notes ?? "",
@@ -139,9 +165,16 @@ export default function TopicsPage() {
       createTopic({
         source,
         title: `${category}のニッチ候補 ${index + 1}`,
+        productName: "",
+        maker: "",
+        price: "",
         officialUrl: "https://example.com",
         imageUrl: "https://example.com/image.jpg",
+        heroImageUrl: "https://example.com/image.jpg",
         priceRange: "¥2,000〜¥8,000",
+        story: "",
+        coreFeatures: "",
+        searchKeyword: "",
         compareAxes: ["価格", "特徴", "用途"],
         notes: `日付: ${date}`
       })
@@ -164,8 +197,12 @@ export default function TopicsPage() {
       createTopic({
         source: "manual",
         title: url.replace(/^https?:\/\//, "").slice(0, 40),
+        productName: "",
+        maker: "",
+        price: "",
         officialUrl: url,
         imageUrl: "",
+        heroImageUrl: "",
         priceRange: "",
         compareAxes: [],
         notes: "手動追加"
@@ -192,8 +229,9 @@ export default function TopicsPage() {
     const newArticles = selectedTopics.map((topic) => ({
       id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
       title: topic.title,
-      slug: `topic-${topic.id.slice(0, 6)}`,
+      slug: slugify(topic.productName || topic.title || `topic-${topic.id.slice(0, 6)}`),
       status: "draft" as const,
+      articleType: topic.articleType,
       contentMd: generateArticleTemplate(topic),
       categories: [],
       tags: [],
@@ -327,10 +365,11 @@ export default function TopicsPage() {
           </div>
         </div>
         <div className="notice" style={{ marginBottom: 12 }}>
-          必須: タイトル / 刺さる条件 / ニッチ判定(3条件) / 比較軸(3つ以上) / 公式URL /
-          画像URL / 価格帯
+          必須: タイトル / 商品名 / メーカー / 価格 / 刺さる条件 / 開発背景 / コア機能 /
+          アイキャッチ / 記事タイプ / ニッチ判定(3条件)
         </div>
-        <table className="table">
+        <div className="table-wrap">
+          <table className="table">
           <thead>
             <tr>
               <th>
@@ -341,12 +380,18 @@ export default function TopicsPage() {
                 />
               </th>
               <th>タイトル</th>
+              <th>商品名</th>
+              <th>メーカー</th>
+              <th>価格</th>
               <th>刺さる条件</th>
+              <th>記事タイプ</th>
               <th>ニッチ判定</th>
-              <th>比較軸</th>
+              <th>開発背景</th>
+              <th>コア機能</th>
+              <th>アイキャッチ</th>
+              <th>利用シーン</th>
+              <th>検索KW</th>
               <th>公式URL</th>
-              <th>画像URL</th>
-              <th>価格帯</th>
               <th>参照元</th>
               <th>メモ</th>
               <th>状態</th>
@@ -355,7 +400,7 @@ export default function TopicsPage() {
           <tbody>
             {topics.length === 0 && (
               <tr>
-                <td colSpan={11}>まだネタがありません。上のフォームから収集してください。</td>
+                <td colSpan={17}>まだネタがありません。上のフォームから収集してください。</td>
               </tr>
             )}
             {topics.map((topic) => {
@@ -387,11 +432,55 @@ export default function TopicsPage() {
                   <td>
                     <input
                       className="input"
+                      value={topic.productName}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { productName: event.target.value })
+                      }
+                      placeholder="商品名"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      value={topic.maker}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { maker: event.target.value })
+                      }
+                      placeholder="メーカー"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      value={topic.price}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { price: event.target.value })
+                      }
+                      placeholder="例: ¥1,280"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
                       value={topic.nicheCondition}
                       onChange={(event) =>
                         handleTopicChange(topic.id, { nicheCondition: event.target.value })
                       }
                     />
+                  </td>
+                  <td>
+                    <select
+                      className="select"
+                      value={topic.articleType}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, {
+                          articleType: event.target.value as TopicItem["articleType"]
+                        })
+                      }
+                    >
+                      <option value="revenue">収益</option>
+                      <option value="discovery">発見</option>
+                    </select>
                   </td>
                   <td>
                     <div className="chip-row">
@@ -428,17 +517,53 @@ export default function TopicsPage() {
                     </div>
                   </td>
                   <td>
+                    <textarea
+                      className="textarea"
+                      value={topic.story}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { story: event.target.value })
+                      }
+                      placeholder="開発背景・企業の狂気"
+                    />
+                  </td>
+                  <td>
+                    <textarea
+                      className="textarea"
+                      value={topic.coreFeatures}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { coreFeatures: event.target.value })
+                      }
+                      placeholder="コア機能/特徴（改行で箇条書き）"
+                    />
+                  </td>
+                  <td>
                     <input
                       className="input"
-                      value={topic.compareAxes.join(", ")}
+                      value={topic.heroImageUrl}
                       onChange={(event) =>
-                        handleTopicChange(topic.id, {
-                          compareAxes: event.target.value
-                            .split(",")
-                            .map((entry) => entry.trim())
-                            .filter(Boolean)
-                        })
+                        handleTopicChange(topic.id, { heroImageUrl: event.target.value })
                       }
+                      placeholder="アイキャッチ画像URL"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      value={topic.usageImageUrl}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { usageImageUrl: event.target.value })
+                      }
+                      placeholder="利用シーン画像URL"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      value={topic.searchKeyword}
+                      onChange={(event) =>
+                        handleTopicChange(topic.id, { searchKeyword: event.target.value })
+                      }
+                      placeholder="検索用キーワード"
                     />
                   </td>
                   <td>
@@ -448,24 +573,7 @@ export default function TopicsPage() {
                       onChange={(event) =>
                         handleTopicChange(topic.id, { officialUrl: event.target.value })
                       }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="input"
-                      value={topic.imageUrl}
-                      onChange={(event) =>
-                        handleTopicChange(topic.id, { imageUrl: event.target.value })
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="input"
-                      value={topic.priceRange}
-                      onChange={(event) =>
-                        handleTopicChange(topic.id, { priceRange: event.target.value })
-                      }
+                      placeholder="公式URL"
                     />
                   </td>
                   <td>{SOURCE_LABELS[topic.source]}</td>
@@ -496,7 +604,8 @@ export default function TopicsPage() {
               );
             })}
           </tbody>
-        </table>
+          </table>
+        </div>
         {selectedMissing.length > 0 && (
           <div className="notice" style={{ marginTop: 12 }}>
             選択中のネタに未入力項目があります。すべて埋めてから送信してください。

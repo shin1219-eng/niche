@@ -273,6 +273,11 @@ main {
   font-size: 0.9rem;
 }
 
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .table th,
 .table td {
   padding: 12px;

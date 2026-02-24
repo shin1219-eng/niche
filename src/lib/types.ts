@@ -32,6 +32,9 @@ export interface TopicItem {
   source: SourceType;
   title: string;
   nicheCondition: string;
+  painSpecific: boolean;
+  solutionFocused: boolean;
+  alternativesWeak: boolean;
   compareAxes: string[];
   officialUrl: string;
   imageUrl: string;
@@ -58,6 +61,9 @@ export interface ArticleItem {
 export const REQUIRED_TOPIC_FIELDS: Array<keyof TopicItem> = [
   "title",
   "nicheCondition",
+  "painSpecific",
+  "solutionFocused",
+  "alternativesWeak",
   "compareAxes",
   "officialUrl",
   "imageUrl",

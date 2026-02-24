@@ -1,36 +1,43 @@
 import { TopicItem } from "./types";
 
 export function generateArticleTemplate(topic: TopicItem) {
-  const axes = topic.compareAxes.length > 0 ? topic.compareAxes : ["価格", "特徴", "用途"];
-  const axisList = axes.map((axis) => `- ${axis}`).join("\n");
-  const tableHeader = `| 商品 | 価格 | 特徴 | 向いてる人 | 弱点 | 公式 |`;
-  const tableDivider = `| --- | --- | --- | --- | --- | --- |`;
-  const tableRow = `| ${topic.title} | ${topic.priceRange || "-"} | - | - | - | ${topic.officialUrl || "-"} |`;
+  const productName = topic.title || "（商品名）";
+  const pain = topic.nicheCondition || "（現象＋ペイン）";
+  const heroImage = topic.imageUrl ? `![アイキャッチ](${topic.imageUrl})` : "（アイキャッチ画像URL）";
 
-  return `# ${topic.title}のおすすめまとめ\n\n` +
-    `**結論（おすすめ3つ）**\n` +
-    `1. ${topic.title}（一次情報に基づく本命）\n` +
-    `2. 代替候補（埋める）\n` +
-    `3. ニッチ特化（埋める）\n\n` +
-    `**刺さる条件（誰向けか）**\n` +
-    `${topic.nicheCondition || "ここに1行で記載"}\n\n` +
-    `## 選び方（比較軸）\n${axisList}\n\n` +
-    `## 比較表\n${tableHeader}\n${tableDivider}\n${tableRow}\n\n` +
-    `## 用途別おすすめ\n` +
-    `- 用途A：\n` +
-    `- 用途B：\n` +
-    `- 用途C：\n\n` +
-    `## FAQ\n` +
-    `**Q. どの条件で選べばいい？**\n` +
-    `A. 比較軸の上位から決めると失敗しにくい。\n\n` +
-    `**Q. 代替はある？**\n` +
-    `A. 価格/用途/制約で比較して判断。\n\n` +
-    `## 購入導線\n` +
-    `- ${topic.officialUrl || "公式リンク"}\n` +
-    `- https://www.rakuten.co.jp/ (楽天アフィリンクを貼る)\n` +
-    `- https://www.amazon.co.jp/ (Amazonアフィリンクを貼る)\n` +
-    `- https://shopping.yahoo.co.jp/ (Yahooアフィリンクを貼る)\n\n` +
-    `---\n` +
-    `**表記**\n` +
-    `この記事にはアフィリエイトリンクが含まれます。評価基準と出典は本文内に明記しています。\n`;
+  const compareHeader = `| 手段 | 手間（時間） | 確実性 | 限界（デメリット） |`;
+  const compareDivider = `| --- | --- | --- | --- |`;
+  const compareRows = [
+    `| ${productName} | - | - | - |`,
+    `| 代替案1 | - | - | - |`,
+    `| 代替案2（気合い・手作業） | - | - | - |`
+  ].join("\n");
+
+  return (
+    `Shintaです。${pain}に毎回引っかかってしまう自分がいる。` +
+    `今日はその「名もなき面倒」を一気に片付ける専用品を紹介する。\n\n` +
+    `# ${pain}。作り手の狂気が生んだ最適解\n\n` +
+    `${heroImage}\n\n` +
+    `今回の専用品：${productName}（ブランド/メーカー未確認）\n` +
+    `▶︎（検索リンク生成用キーワード：${productName}）\n\n` +
+    `## ニッチな背景：なぜわざわざ作ったのか\n` +
+    `- 開発背景（※公式出典で裏取り）\n` +
+    `- 企業のニッチなこだわり（※公式出典で裏取り）\n\n` +
+    `## 比較表（専用品 vs 妥協案）\n` +
+    `${compareHeader}\n${compareDivider}\n${compareRows}\n\n` +
+    `## ニッチポイント（工数がどう減るか）\n` +
+    `- ポイント1：\n` +
+    `- ポイント2：\n` +
+    `- ポイント3：\n\n` +
+    `## 注意点：購入前に確認してほしいこと\n` +
+    `- 向かない条件（切り捨て）\n\n` +
+    `## ニッチFAQ\n` +
+    `**Q: 〜は対応している？**\n` +
+    `A: （結論＋理由）\n\n` +
+    `**Q: 〜でも使える？**\n` +
+    `A: （結論＋理由）\n\n` +
+    `## 締め\n` +
+    `我慢せずに、優秀な道具に任せて心地よい時間を作ってほしい。\n\n` +
+    `Written by Shinta\n`
+  );
 }

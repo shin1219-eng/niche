@@ -26,6 +26,9 @@ const CATEGORIES = [
 const FIELD_LABELS: Record<string, string> = {
   title: "タイトル",
   nicheCondition: "刺さる条件",
+  painSpecific: "ペイン具体",
+  solutionFocused: "一点突破",
+  alternativesWeak: "妥協案のみ",
   compareAxes: "比較軸",
   officialUrl: "公式URL",
   imageUrl: "画像URL",
@@ -42,12 +45,15 @@ const SOURCE_OPTIONS: { value: SourceType; label: string }[] = [
 
 function createTopic(base: Partial<TopicItem> & { source: SourceType }) {
   const now = new Date().toISOString();
-  return {
-    id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
-    title: base.title ?? "",
-    nicheCondition: base.nicheCondition ?? "",
-    compareAxes: base.compareAxes ?? [],
-    officialUrl: base.officialUrl ?? "",
+    return {
+      id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : nanoid(),
+      title: base.title ?? "",
+      nicheCondition: base.nicheCondition ?? "",
+      painSpecific: base.painSpecific ?? false,
+      solutionFocused: base.solutionFocused ?? false,
+      alternativesWeak: base.alternativesWeak ?? false,
+      compareAxes: base.compareAxes ?? [],
+      officialUrl: base.officialUrl ?? "",
     imageUrl: base.imageUrl ?? "",
     priceRange: base.priceRange ?? "",
     notes: base.notes ?? "",
@@ -64,6 +70,10 @@ function getMissingFields(topic: TopicItem) {
     const value = topic[field];
     if (Array.isArray(value)) {
       if (value.length < 3) missing.push(field);
+      return;
+    }
+    if (typeof value === "boolean") {
+      if (!value) missing.push(field);
       return;
     }
     if (!value || (typeof value === "string" && value.trim() === "")) {
@@ -317,7 +327,8 @@ export default function TopicsPage() {
           </div>
         </div>
         <div className="notice" style={{ marginBottom: 12 }}>
-          必須: タイトル / 刺さる条件 / 比較軸(3つ以上) / 公式URL / 画像URL / 価格帯
+          必須: タイトル / 刺さる条件 / ニッチ判定(3条件) / 比較軸(3つ以上) / 公式URL /
+          画像URL / 価格帯
         </div>
         <table className="table">
           <thead>
@@ -331,6 +342,7 @@ export default function TopicsPage() {
               </th>
               <th>タイトル</th>
               <th>刺さる条件</th>
+              <th>ニッチ判定</th>
               <th>比較軸</th>
               <th>公式URL</th>
               <th>画像URL</th>
@@ -343,7 +355,7 @@ export default function TopicsPage() {
           <tbody>
             {topics.length === 0 && (
               <tr>
-                <td colSpan={10}>まだネタがありません。上のフォームから収集してください。</td>
+                <td colSpan={11}>まだネタがありません。上のフォームから収集してください。</td>
               </tr>
             )}
             {topics.map((topic) => {
@@ -380,6 +392,40 @@ export default function TopicsPage() {
                         handleTopicChange(topic.id, { nicheCondition: event.target.value })
                       }
                     />
+                  </td>
+                  <td>
+                    <div className="chip-row">
+                      <label className="chip chip-btn">
+                        <input
+                          type="checkbox"
+                          checked={topic.painSpecific}
+                          onChange={(event) =>
+                            handleTopicChange(topic.id, { painSpecific: event.target.checked })
+                          }
+                        />
+                        ペイン具体
+                      </label>
+                      <label className="chip chip-btn">
+                        <input
+                          type="checkbox"
+                          checked={topic.solutionFocused}
+                          onChange={(event) =>
+                            handleTopicChange(topic.id, { solutionFocused: event.target.checked })
+                          }
+                        />
+                        一点突破
+                      </label>
+                      <label className="chip chip-btn">
+                        <input
+                          type="checkbox"
+                          checked={topic.alternativesWeak}
+                          onChange={(event) =>
+                            handleTopicChange(topic.id, { alternativesWeak: event.target.checked })
+                          }
+                        />
+                        妥協案のみ
+                      </label>
+                    </div>
                   </td>
                   <td>
                     <input

@@ -42,6 +42,14 @@ export default function AdminArchivePage() {
     );
   };
 
+  const deleteArchivedArticle = (id: string, title: string) => {
+    const ok = window.confirm(
+      `アーカイブの記事「${title || "無題の記事"}」を完全に削除します。よろしいですか？`
+    );
+    if (!ok) return;
+    setArticles((prev) => prev.filter((article) => article.id !== id));
+  };
+
   return (
     <div className="grid" style={{ gap: 20 }}>
       <section className="card">
@@ -78,6 +86,13 @@ export default function AdminArchivePage() {
                 onClick={() => restoreToDraft(article.id)}
               >
                 下書きへ復元
+              </button>
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={() => deleteArchivedArticle(article.id, article.title)}
+              >
+                完全削除
               </button>
             </div>
           </div>

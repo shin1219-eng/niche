@@ -79,6 +79,13 @@ export default function AdminDraftsPage() {
     setArticles((prev) => [createDraft(), ...prev]);
   };
 
+  const handleDeleteArticle = (id: string, title: string) => {
+    const ok = window.confirm(`「${title || "無題の記事"}」を完全に削除します。よろしいですか？`);
+    if (!ok) return;
+    setArticles((prev) => prev.filter((article) => article.id !== id));
+    setEditingId((prev) => (prev === id ? null : prev));
+  };
+
   return (
     <div className="grid" style={{ gap: 20 }}>
       <section className="card">
@@ -129,6 +136,13 @@ export default function AdminDraftsPage() {
                 onClick={() => handleArchive(article.id)}
               >
                 アーカイブへ
+              </button>
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={() => handleDeleteArticle(article.id, article.title)}
+              >
+                削除
               </button>
               <button
                 className="btn btn-primary"

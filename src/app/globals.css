@@ -396,6 +396,17 @@ main {
   background: #fff;
 }
 
+.btn-danger {
+  color: #fff;
+  border-color: #9f2f24;
+  background: #b33c2d;
+}
+
+.btn-danger:hover {
+  border-color: #7e251d;
+  background: #8f2f24;
+}
+
 .inline-actions {
   display: flex;
   align-items: center;

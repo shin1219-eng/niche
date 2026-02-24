@@ -6,33 +6,33 @@ export default function Footer() {
           <div>
             <div className="footer-brand">NICHE!</div>
             <p>
-              ニッチな商品・サービスを比較と編集で届ける商品比較サービス。
+              ニッチな課題に刺さる専用品を、編集で届けるマガジン。
             </p>
           </div>
           <div>
-            <h4>運営情報</h4>
+            <h4>Editorial</h4>
             <ul>
-              <li>運営会社</li>
               <li>編集方針</li>
-              <li>利用規約</li>
-              <li>プライバシーポリシー</li>
+              <li>検証ルール</li>
+              <li>掲載ポリシー</li>
+              <li>問い合わせ</li>
             </ul>
           </div>
           <div>
-            <h4>カテゴリ</h4>
+            <h4>Topics</h4>
             <ul>
-              <li>家電</li>
-              <li>キッチン用品</li>
-              <li>生活雑貨</li>
-              <li>ガジェット</li>
+              <li>キッチンの面倒</li>
+              <li>片付けの時短</li>
+              <li>省スペース生活</li>
+              <li>移動と携帯</li>
             </ul>
           </div>
           <div>
-            <h4>お問い合わせ</h4>
+            <h4>For Brands</h4>
             <ul>
               <li>掲載依頼</li>
-              <li>問い合わせフォーム</li>
-              <li>広告について</li>
+              <li>取材相談</li>
+              <li>広告掲載</li>
             </ul>
           </div>
         </div>

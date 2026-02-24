@@ -29,7 +29,7 @@ export default function PublicNav() {
   return (
     <nav className="navbar">
       <div className="nav-brand">
-        <Link href="/">NICHE!</Link>
+        <Link href="/">NICHE! MAGAZINE</Link>
       </div>
       <div className="nav-actions">
         <Link className="nav-link" href="/articles">

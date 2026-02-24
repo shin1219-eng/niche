@@ -1,30 +1,34 @@
-# NICHE! CMS
+# NICHE! Magazine CMS
 
-ニッチ記事の「ネタ収集 → 記事作成 → 下書き移管」を管理画面だけで回すためのMVPです。
+ニッチ特化マガジン向けの、下書き運用中心CMSです。
 
-## できること（MVP）
-- ネタ収集タブ（API収集の擬似フロー + 手動URL追加）
-- 必須カラムが埋まるまで記事作成へ送れないゲート
-- 記事作成タブ（Markdown編集 / OKで下書き化）
-- 楽天/Amazon/Yahooアフィリンクを自動ボタン化
-- 公開トップ / 記事一覧 / 記事詳細（ローカル保存データを表示）
-- ブックマーク（ローカル保存）
+## 現在の機能
+- 管理ダッシュボード（件数確認）
+- 下書き管理（作成・編集・状態整理）
+- アーカイブ管理（保管・復元）
+- 公開画面（トップ / 記事一覧 / 記事詳細 / マイページ）
+- ブックマーク機能
 
-## 使い方
+## ルート
+- 管理画面: `/admin/dashboard` `/admin/drafts` `/admin/archive`
+- 公開画面: `/` `/articles` `/articles/[slug]` `/login` `/mypage`
+
+旧ルート `/admin/topics` `/admin/articles` `/admin/taxonomy` は互換のためリダイレクトされます。
+
+## 起動
 ```bash
 npm install
 npm run dev
 ```
 
-- 管理画面: `/admin/topics` と `/admin/articles`
-- 公開画面: `/` と `/articles` と `/articles/[slug]`
-- データは `localStorage` に保存されます（本番はSupabase等へ置き換え前提）
+## 環境変数
+`.env.example` をコピーして設定してください。
 
-## 次の拡張ポイント
-- 楽天/Yahoo APIの実装とキー管理
-- Supabase連携（topics/articlesテーブル）
-- 収集ドメインのホワイトリスト管理
-- 画像の正規化・ライセンス記録
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_ADMIN_EMAILS=
+```
 
-## メモ
-ロゴはプレースホルダーです。正式ロゴは `public/brands` に差し替えてください。
+- Supabase設定あり: 認証とDB連携を利用
+- Supabase設定なし: 一部データは `localStorage` に保存

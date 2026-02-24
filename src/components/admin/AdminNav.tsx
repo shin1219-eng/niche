@@ -5,9 +5,8 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/admin/dashboard", label: "ダッシュボード" },
-  { href: "/admin/topics", label: "ネタ収集" },
-  { href: "/admin/articles", label: "記事作成" },
-  { href: "/admin/taxonomy", label: "分類管理" },
+  { href: "/admin/drafts", label: "下書き" },
+  { href: "/admin/archive", label: "アーカイブ" },
   { href: "/articles", label: "記事一覧" }
 ];
 
@@ -18,7 +17,7 @@ export default function AdminNav() {
     <nav className="navbar">
       <div className="nav-brand">
         <span>NICHE! CMS</span>
-        <span className="badge">管理画面</span>
+        <span className="badge">Editor</span>
       </div>
       <div className="nav-links">
         {links.map((link) => (

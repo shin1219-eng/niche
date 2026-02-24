@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { isAdminEmail } from "@/lib/adminAuth";
 
-type GateStatus = "loading" | "allowed" | "denied" | "missing";
+type GateStatus = "loading" | "allowed" | "denied";
 
 export default function AdminGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const client = supabase;
     if (!client) {
-      setStatus("missing");
+      setStatus("allowed");
       return;
     }
 
@@ -61,16 +61,10 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
         </div>
         <span className="badge">メールログイン</span>
       </div>
-      {status === "missing" ? (
-        <div className="notice">
-          Supabase設定が見つかりません。環境変数を設定してください。
-        </div>
-      ) : (
-        <div className="notice">
-          ログイン中のメールで管理者権限を確認しています。
-          {email ? `（${email}）` : ""}
-        </div>
-      )}
+      <div className="notice">
+        ログイン中のメールで管理者権限を確認しています。
+        {email ? `（${email}）` : ""}
+      </div>
     </section>
   );
 }

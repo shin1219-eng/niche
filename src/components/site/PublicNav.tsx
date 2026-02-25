@@ -30,7 +30,7 @@ export default function PublicNav() {
     <nav className="navbar">
       <div className="nav-brand">
         <Link href="/">
-          <span>NICHE!</span> EDITION
+          <span>NICHE!</span>
         </Link>
       </div>
       <div className="nav-actions">

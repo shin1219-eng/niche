@@ -62,7 +62,7 @@ export default function HomePage() {
 
         {/* Magazine Tag */}
         <div className="article-tag" style={{ position: 'absolute', bottom: '32px', right: 'min(4vw, 36px)', fontSize: '1.2rem', padding: '8px 16px', zIndex: 10, letterSpacing: '0.1em' }}>
-          NICHE EDITION
+          NICHE!
         </div>
       </section>
 

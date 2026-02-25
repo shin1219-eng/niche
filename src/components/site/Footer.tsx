@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <div className="footer-brand"><span>NICHE!</span> EDITION</div>
+            <div className="footer-brand"><span>NICHE!</span></div>
             <p className="footer-desc">
               ニッチな課題に刺さる専用品を、編集で届けるマガジン。
             </p>

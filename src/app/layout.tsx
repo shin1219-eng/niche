@@ -1,17 +1,23 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { M_PLUS_1p, Zen_Old_Mincho } from "next/font/google";
+import { Noto_Sans_JP, Montserrat, Shippori_Mincho } from "next/font/google";
 
-const headingFont = Zen_Old_Mincho({
-  variable: "--font-heading",
+const sansFont = Noto_Sans_JP({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["700"]
+  weight: ["400", "500", "700", "900"],
 });
 
-const bodyFont = M_PLUS_1p({
-  variable: "--font-body",
+const minchoFont = Shippori_Mincho({
+  variable: "--font-mincho",
   subsets: ["latin"],
-  weight: ["400", "500", "700"]
+  weight: ["400", "500", "700", "800"],
+});
+
+const displayFont = Montserrat({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400", "600", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +32,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={`${headingFont.variable} ${bodyFont.variable}`}>{children}</body>
+      <body className={`${sansFont.variable} ${minchoFont.variable} ${displayFont.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }

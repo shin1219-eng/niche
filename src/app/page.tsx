@@ -31,36 +31,38 @@ export default function HomePage() {
     <div>
       <PublicNav />
 
-      {/* Editorial Hero */}
-      <section className="hero-editorial">
-        <div className="container">
-          <div className="hero-grid">
-            <div>
-              <span className="hero-kicker">Issue 04 / Discovery</span>
-              <h1 className="hero-title">妥協していた<br />面倒を、<br />専用品で片付ける。</h1>
-              <p className="hero-sub">
-                ニッチな課題を、ニッチな道具で解決する。探せばあるのに届いていない製品を、マガジンとして再編集。<br />
-                名もなきストレスを消し去る、一点突破の体験を。
-              </p>
+      {/* Editorial Hero (Full Screen Magazine Style) */}
+      <section className="hero-editorial-full">
+        {/* Background Placeholder for Future Video */}
+        <div className="hero-bg-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1542382156909-9ec371e2c140?auto=format&fit=crop&w=2000&q=80"
+            alt="Editorial Cover Background"
+          />
+          <div className="hero-overlay"></div>
+        </div>
 
-              <div style={{ marginTop: '40px' }}>
-                <Link href="/articles" className="btn btn-primary">
-                  最新の特集を読む
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </Link>
-              </div>
-            </div>
+        <div className="container hero-content-full">
+          <div style={{ maxWidth: '800px' }}>
+            <span className="hero-kicker">Issue 04 / Discovery</span>
+            <h1 className="hero-title">妥協していた<br />面倒を、<br />専用品で片付ける。</h1>
+            <p className="hero-sub">
+              ニッチな課題を、ニッチな道具で解決する。探せばあるのに届いていない製品を、マガジンとして再編集。<br />
+              名もなきストレスを消し去る、一点突破の体験を。
+            </p>
 
-            <div className="hero-image-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1542382156909-9ec371e2c140?auto=format&fit=crop&w=1200&q=80"
-                alt="Editorial Cover"
-              />
-              <div className="article-tag" style={{ top: 'auto', bottom: '12px', right: '12px', left: 'auto', fontSize: '1.2rem', padding: '8px 16px' }}>
-                NICHE EDITION
-              </div>
+            <div style={{ marginTop: '40px' }}>
+              <Link href="/articles" className="btn btn-primary">
+                最新の特集を読む
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </Link>
             </div>
           </div>
+        </div>
+
+        {/* Magazine Tag */}
+        <div className="article-tag" style={{ position: 'absolute', bottom: '32px', right: 'min(4vw, 36px)', fontSize: '1.2rem', padding: '8px 16px', zIndex: 10, letterSpacing: '0.1em' }}>
+          NICHE EDITION
         </div>
       </section>
 

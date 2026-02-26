@@ -77,7 +77,7 @@ const fromTopicRow = (row: Record<string, any>): TopicItem => ({
   createdAt: row.created_at ?? new Date().toISOString()
 });
 
-const toArticleRow = (article: ArticleItem) => ({
+export const toArticleRow = (article: ArticleItem) => ({
   id: article.id,
   title: article.title,
   slug: article.slug,
@@ -92,7 +92,7 @@ const toArticleRow = (article: ArticleItem) => ({
   published_at: article.publishedAt ?? null
 });
 
-const fromArticleRow = (row: Record<string, any>): ArticleItem => ({
+export const fromArticleRow = (row: Record<string, any>): ArticleItem => ({
   id: row.id,
   title: row.title ?? "",
   slug: row.slug ?? "",

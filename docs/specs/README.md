@@ -3,8 +3,8 @@
 このフォルダは、Niche運用の「仕様書置き場」です。
 
 - Research/Extractor（調査担当）: `research-extractor_v1.5.md`
-- Writer（執筆担当）: `writer-persona_and_rules.md`
-- 記事出力テンプレ: `article-output-template.md`
+- Writer（執筆担当）: `writer-persona_and_rules.md`（v2）
+- 記事出力テンプレ: `article-output-template.md`（表禁止・文章比較）
 
 ## 運用（最小）
 1) Research/Extractor が Writer Pack を生成（一次情報＋citations）
